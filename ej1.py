@@ -58,7 +58,7 @@ root = tk.Tk()
 root.title("Calculadora")
 root.geometry("400x150")
 root.configure(bg="#f5bad4")
-root.resizable(False, False) 
+root.resizable(False, False)
 
 entrada = ttk.Entry(root, font=("Trebuchet MS", 15))
 entrada.pack(fill="x", padx=20, pady=20)
