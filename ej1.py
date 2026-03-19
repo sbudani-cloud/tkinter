@@ -52,7 +52,7 @@ def raiz():
     except:
         limpiar()
 
-#_____________ root y mas cositas no se _____________.
+#_____________ root y mas cositas no se _____________
 
 root = tk.Tk()
 root.title("Calculadora")
