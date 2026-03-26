@@ -7,7 +7,7 @@ import math
 def limpiar():
     entrada.delete(0, tk.END)
 
-def calcular():#
+def calcular():
     try:
         cosita = entrada.get()
         for char in cosita:
