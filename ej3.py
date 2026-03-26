@@ -10,7 +10,7 @@ def guardar():
     id = id_prod.get()
     for prod in productos:
         if prod["id"] == id:
-            print("Ya existe un producto con esa id.")
+            print("Ya existe un producto con esa ID.")
             break
     if id_prod.get() == "" or nombre.get() == "" or precio.get() == "" or cant.get() == "" or categoria.get() == "":
         print("No podes dejar ningún campo vacío.")
@@ -22,7 +22,7 @@ def guardar():
         limpiar(precio)
         limpiar(cant)
         limpiar(categoria)
-        print(productos)
+        refrescar_tabla()
 
 def modificar():
     pass
@@ -35,13 +35,7 @@ def refrescar_tabla():
         tree.delete(fila)
 
     for prod in productos:
-        tree.insert("", tk.END, values=(
-            prod["id"],
-            prod["nombre"],
-            prod["precio"],
-            prod["cantidad"],
-            prod["categoria"]
-        ))
+        tree.insert("", tk.END, values=(prod["nombre"],))
 
 root = tk.Tk()
 root.title("Sistema de Gestión de Inventario")
@@ -81,8 +75,10 @@ bmodificar = ttk.Button(hm1, text="Modificar", command=modificar).grid(row=5, co
 bborrar = ttk.Button(hm1, text="Borrar", command=borrar).grid(row=6, column=0, padx=5, pady=5)
 
 #treeview
-tree = ttk.Treeview(hm2)
+tree = ttk.Treeview(hm2, columns=("Nombre"), show="headings")
 tree.pack(fill="both", expand=True, padx=10, pady=10)
+tree.heading("Nombre", text="Nombre")
+tree.column("Nombre", width=150)
 scrollbar = ttk.Scrollbar(root, orient="vertical", command=tree.yview)
 scrollbar.pack(side="right", fill="y")
 tree.configure(yscrollcommand=scrollbar.set)
