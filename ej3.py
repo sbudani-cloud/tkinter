@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-import json
+import json, csv, sqlite3
 
 productos = []
 orden_actual = {}
@@ -29,6 +29,21 @@ def cargar_json():
             productos = json.load(archivo)
     except FileNotFoundError:
         productos = []
+
+def exportar_csv():
+    with open("productos.csv", "w", newline="") as archivo:
+        writer = csv.writer(archivo, delimiter=";")
+
+        writer.writerow(["ID", "Nombre", "Precio", "Cantidad", "Categoria"])
+
+        for prod in productos:
+            writer.writerow([
+                prod["id"],
+                prod["nombre"],
+                prod["precio"],
+                prod["cantidad"],
+                prod["categoria"]
+            ])
 
 def guardar():
     id = id_prod.get()
@@ -179,6 +194,8 @@ categoria.grid(row=4, column=1, padx=5, pady=5)
 bguardar = ttk.Button(hm1, text="Guardar", command=guardar).grid(row=5, column=0, padx=5, pady=5)
 bmodificar = ttk.Button(hm1, text="Modificar", command=modificar).grid(row=5, column=1, padx=5, pady=5)
 bborrar = ttk.Button(hm1, text="Borrar", command=borrar).grid(row=6, column=0, padx=5, pady=5)
+
+bexportar = ttk.Button(hm1, text="Exportar CSV", command=exportar_csv).grid(row=6, column=1, padx=5, pady=5)
 
 #labels errores
 id_existe = ttk.Label(hm1, text="Ya existe un producto con esa ID.", foreground="red")
