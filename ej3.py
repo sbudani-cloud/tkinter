@@ -7,6 +7,18 @@ productos = []
 def limpiar(ent):
     ent.delete(0, tk.END)
 
+def guardar_json():
+    with open("productos.json", "w") as archivo:
+        json.dump(productos, archivo, indent=4)
+
+def cargar_json():
+    global productos
+    try:
+        with open("productos.json", "r") as archivo:
+            productos = json.load(archivo)
+    except FileNotFoundError:
+        productos = []
+
 def guardar():
     id = id_prod.get()
     for prod in productos:
@@ -27,17 +39,21 @@ def guardar():
         limpiar(precio)
         limpiar(cant)
         limpiar(categoria)
-    else: #falta guardarlo en un json
+    else:
         campo_vacio.grid_remove()
         id_existe.grid_remove()
         productito = {"id":id, "nombre":nombre.get(), "precio":precio.get(), "cantidad":cant.get(), "categoria":categoria.get()}
         productos.append(productito)
+        guardar_json()
         limpiar(id_prod)
         limpiar(nombre)
         limpiar(precio)
         limpiar(cant)
         limpiar(categoria)
         refrescar_tabla()
+
+def leer_prod():
+    pass
 
 def modificar():
     pass
@@ -115,6 +131,12 @@ tree.column("Categoria", width=100)
 scrollbar = ttk.Scrollbar(root, orient="vertical", command=tree.yview)
 scrollbar.pack(side="right", fill="y")
 tree.configure(yscrollcommand=scrollbar.set)
+
+tree.bind("<ButtonRelease-1>", leer_prod)
+
+#cargar
+cargar_json()
+refrescar_tabla()
 
 #loop
 root.mainloop()
