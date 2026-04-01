@@ -4,6 +4,13 @@
         "nombre": "holi",
         "precio": "10",
         "cantidad": "333",
-        "categoria": "holiiii"
+        "categoria": "aaaaa"
+    },
+    {
+        "id": "1",
+        "nombre": "sg",
+        "precio": "2",
+        "cantidad": "1",
+        "categoria": "1"
     }
 ]

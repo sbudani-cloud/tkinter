@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-import json, csv, sqlite3
+import json, csv
 
 productos = []
 orden_actual = {}
@@ -135,7 +135,7 @@ def refrescar_tabla():
         tree.delete(fila)
 
     for prod in productos:
-        if filtro in prod["nombre"].lower():
+        if filtro in prod["nombre"].lower() or filtro in prod["id"].lower() or filtro in prod["precio"].lower() or filtro in prod["categoria"].lower() or filtro in prod["cantidad"].lower():
             
             cantidad = int(prod["cantidad"])
             tag = ""
