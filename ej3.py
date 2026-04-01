@@ -3,6 +3,7 @@ from tkinter import ttk
 import json
 
 productos = []
+orden_actual = {}
 
 umbral_bajo = 10
 umbral_critico = 3
@@ -98,6 +99,20 @@ def borrar():
     guardar_json()
     limpiar_todo()
 
+def ordenar(columna):
+    global productos
+
+    reverso = orden_actual.get(columna, False)
+
+    try:
+        productos.sort(key=lambda x: float(x[columna]), reverse=reverso)
+    except:
+        productos.sort(key=lambda x: x[columna].lower(), reverse=reverso)
+
+    orden_actual[columna] = not reverso
+
+    refrescar_tabla()
+
 def refrescar_tabla():
     filtro = busqueda.get().lower()
 
@@ -173,11 +188,11 @@ cantidad_int = ttk.Label(hm1, text="La cantidad debe ser un número.", foregroun
 #treeview
 tree = ttk.Treeview(hm2, columns=("ID", "Nombre", "Precio", "Cantidad", "Categoria"), show="headings")
 tree.pack(fill="both", expand=True, padx=10, pady=10)
-tree.heading("ID", text="ID")
-tree.heading("Nombre", text="Nombre")
-tree.heading("Precio", text="Precio")
-tree.heading("Cantidad", text="Cantidad")
-tree.heading("Categoria", text="Categoria")
+tree.heading("ID", text="ID", command=lambda: ordenar("id"))
+tree.heading("Nombre", text="Nombre", command=lambda: ordenar("nombre"))
+tree.heading("Precio", text="Precio", command=lambda: ordenar("precio"))
+tree.heading("Cantidad", text="Cantidad", command=lambda: ordenar("cantidad"))
+tree.heading("Categoria", text="Categoria", command=lambda: ordenar("categoria"))
 tree.column("ID", width=50)
 tree.column("Nombre", width=100)
 tree.column("Precio", width=70)
